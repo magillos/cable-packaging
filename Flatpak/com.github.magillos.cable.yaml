@@ -1,0 +1,88 @@
+app-id: com.github.magillos.cable
+runtime: org.kde.Platform
+runtime-version: '6.10'
+sdk: org.kde.Sdk
+command: cable
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --filesystem=home
+  - --talk-name=org.freedesktop.systemd1
+  - --device=dri
+  - --filesystem=xdg-run/pipewire-0
+  - --talk-name=org.freedesktop.Flatpak
+  - --filesystem=xdg-config/kdeglobals:ro
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=org.freedesktop.StatusNotifierWatcher
+  - --filesystem=/tmp
+  - --share=network
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=xdg-config/gtk-3.0:ro
+  - --talk-name=org.kde.KWin
+modules:
+  - name: mxml
+    buildsystem: simple
+    build-commands:
+      - ./configure --prefix=/app
+      - make
+      - make install
+      
+    sources:
+      - type: git
+        url: https://github.com/michaelrsweet/mxml.git
+        tag: v2.12
+
+  - name: aj-snapshot
+    buildsystem: simple
+    build-commands:
+      - ./autogen.sh
+      - CFLAGS="-I/app/include" LDFLAGS="-L/app/lib" ./configure --prefix=/app
+      - make
+      - make install
+    sources:
+      - type: git
+        url: https://git.code.sf.net/p/aj-snapshot/code
+        tag: release_0.9.9
+
+  - name: jack_delay
+    buildsystem: simple
+    build-commands:
+      - make -C source
+      - install -Dm755 source/jack_delay /app/bin/
+    sources:
+      - type: git
+        url: https://github.com/ericfont/jack_delay.git
+        tag: v0.4.2
+
+  - name: python-packages
+    buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network
+    build-commands:
+      - pip3 install --prefix=/app jack-client requests packaging pyalsaaudio dbus-python PyQt6
+  
+  - name: cable
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-build-isolation --prefix=/app .
+      - install -Dm755 connection-manager.py /app/bin/
+      - install -Dm644 jack-plug.svg /app/share/icons/hicolor/scalable/apps/com.github.magillos.cable.svg
+      - install -Dm644 jack-plug.svg /app/share/icons/hicolor/scalable/apps/jack-plug.svg
+      - for size in 16 24 32 48 64 128 256; do rsvg-convert -w $size -h $size jack-plug.svg > com.github.magillos.cable_${size}.png; install -Dm644 com.github.magillos.cable_${size}.png /app/share/icons/hicolor/${size}x${size}/apps/com.github.magillos.cable.png; rsvg-convert -w $size -h $size jack-plug.svg > jack-plug_${size}.png; install -Dm644 jack-plug_${size}.png /app/share/icons/hicolor/${size}x${size}/apps/jack-plug.png; done
+      - mkdir -p /app/share/icons/hicolor/symbolic/apps
+      - ln -sf ../scalable/apps/com.github.magillos.cable.svg /app/share/icons/hicolor/symbolic/apps/com.github.magillos.cable-symbolic.svg
+      - ln -sf ../scalable/apps/jack-plug.svg /app/share/icons/hicolor/symbolic/apps/jack-plug-symbolic.svg
+      - install -Dm644 com.github.magillos.cable.desktop /app/share/applications/com.github.magillos.cable.desktop
+      - install -Dm644 com.github.magillos.cable.metainfo.xml /app/share/metainfo/com.github.magillos.cable.metainfo.xml
+      - mkdir -p /app/etc/xdg/
+      - echo "[Qt]" > /app/etc/xdg/qt6.conf
+      - echo "Style=Breeze" >> /app/etc/xdg/qt6.conf
+      - echo "PlatformTheme=gnome" >> /app/etc/xdg/qt6.conf
+      - gtk-update-icon-cache -f -t /app/share/icons/hicolor
+    sources:
+      - type: dir
+        path: .
+
