@@ -1,0 +1,14 @@
+Source: cable
+Section: utils
+Priority: optional
+Maintainer: Magillos <your.email@example.com>
+Build-Depends: debhelper-compat (=13), dh-python, python3-all, python3-setuptools
+Standards-Version: 4.6.2
+Homepage: https://github.com/magillos/Cable
+
+Package: cable
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends},
+         python3-pyqt6, python3-jack-client,
+         pipewire, wireplumber, libqt6svg6, python3-alsaaudio, python3-packaging, aj-snapshot, jack-delay
+Description: PyQt6 application to dynamically modify Pipewire and Wireplumber settings with connections manager.

@@ -1,0 +1,5 @@
+cable (0.9.27) UNRELEASED; urgency=medium
+
+  * Initial Debian packaging.
+
+ -- Magillos <magillos@vbox.broadband>  Tue, 25 Feb 2025 14:56:36 +0000

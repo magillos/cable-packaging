@@ -1,0 +1,1 @@
+# debian/install is now very minimal, just to trigger dh_install (we override its behavior in rules)

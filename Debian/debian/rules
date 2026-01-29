@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/cable
+	# Manually install additional files
+	#install -Dm644 jack-plug.svg debian/cable/usr/share/icons/hicolor/scalable/apps/com.github.magillos.cable.svg
+	install -Dm644 jack-plug.svg debian/cable/usr/share/icons/hicolor/scalable/apps/jack-plug.svg
+	install -Dm644 com.github.magillos.cable.desktop debian/cable/usr/share/applications/com.github.magillos.cable.desktop
+	install -Dm644 connection-manager.py debian/cable/usr/share/cable/connection-manager.py
+	install -Dm755 debian/cable-wrapper debian/cable/usr/bin/cable
