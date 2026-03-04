@@ -10,5 +10,5 @@ Package: cable
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends},
          python3-pyqt6, python3-jack-client,
-         pipewire, wireplumber, libqt6svg6, python3-alsaaudio, python3-packaging, aj-snapshot, jack-delay
+         pipewire, wireplumber, libqt6svg6, python3-alsaaudio, python3-packaging, aj-snapshot, jack-delay, python3-graphviz
 Description: PyQt6 application to dynamically modify Pipewire and Wireplumber settings with connections manager.
