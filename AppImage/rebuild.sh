@@ -16,12 +16,16 @@ cp -r Cable.py cable_core cables graph connection-manager.py AppDir/usr/bin/
 echo "Copying desktop file and icon..."
 cp com.github.magillos.cable.desktop AppDir/usr/share/applications/
 cp jack-plug.svg AppDir/usr/share/icons/hicolor/scalable/apps/
+cp jack-plug-light.svg AppDir/usr/share/icons/hicolor/scalable/apps/
+cp jack-plug-dark.svg AppDir/usr/share/icons/hicolor/scalable/apps/
 
 
 echo "Creating symlinks..."
 cd AppDir
 ln -sf usr/share/applications/com.github.magillos.cable.desktop cable.desktop
 ln -sf usr/share/icons/hicolor/scalable/apps/jack-plug.svg jack-plug.svg
+ln -sf usr/share/icons/hicolor/scalable/apps/jack-plug-light.svg jack-plug-light.svg
+ln -sf usr/share/icons/hicolor/scalable/apps/jack-plug-dark.svg jack-plug-dark.svg
 ln -sf AppRun cable
 ln -sf AppRun connection-manager
 cd ..
@@ -29,6 +33,8 @@ cd ..
 
 echo "Copying icon to application directory..."
 cp jack-plug.svg AppDir/usr/bin/
+cp jack-plug-light.svg AppDir/usr/bin/
+cp jack-plug-dark.svg AppDir/usr/bin/
 
 
 echo "Creating AppRun script..."
