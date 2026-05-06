@@ -9,7 +9,6 @@ Icon=com.github.magillos.cable
 Terminal=false
 Categories=AudioVideo;Audio;Settings;Qt;
 StartupWMClass=com.github.magillos.cable
-#StartupWMClass=Cable
 X-GNOME-UsesNotifications=true
 X-KDE-DBUS-Restricted-Interfaces=org.kde.StatusNotifierWatcher,org.freedesktop.systemd1
 X-Flatpak=com.github.magillos.cable

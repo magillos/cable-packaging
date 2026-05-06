@@ -2,6 +2,8 @@ app-id: com.github.magillos.cable
 runtime: org.kde.Platform
 runtime-version: '6.10'
 sdk: org.kde.Sdk
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '6.10'
 command: cable
 finish-args:
   - --share=ipc
@@ -25,6 +27,11 @@ finish-args:
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/graphviz
   - --env=GV_CONFIG_PATH=/app/lib/graphviz/config6
   - --env=PATH=/app/bin:/usr/bin:/bin
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
 modules:
   - name: mxml
     buildsystem: simple
@@ -66,7 +73,7 @@ modules:
       build-args:
         - --share=network
     build-commands:
-      - pip3 install --prefix=/app jack-client requests packaging pyalsaaudio dbus-python PyQt6 graphviz
+      - pip3 install --prefix=/app jack-client requests pyalsaaudio dbus-python graphviz
   
   - name: graphviz
     buildsystem: autotools

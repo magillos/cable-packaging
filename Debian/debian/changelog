@@ -1,4 +1,4 @@
-cable (0.10.6) UNRELEASED; urgency=medium
+cable (0.10.7) UNRELEASED; urgency=medium
 
   * Initial Debian packaging.
 
